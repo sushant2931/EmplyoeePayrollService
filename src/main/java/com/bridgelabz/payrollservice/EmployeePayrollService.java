@@ -22,6 +22,10 @@ public class EmployeePayrollService {public enum IOService {CONSOLE_IO,FILE_IO, 
         employeePayrollService.readEmployeePayrollData(consoleInputReader);
         employeePayrollService.writeEmployeePayrollData();
     }
+
+    private void writeEmployeePayrollData() {
+    }
+
     private void readEmployeePayrollData(Scanner consoleInputReader) {
         System.out.println("Enter Employee ID: ");
         int id = consoleInputReader.nextInt();
@@ -32,7 +36,7 @@ public class EmployeePayrollService {public enum IOService {CONSOLE_IO,FILE_IO, 
         employeePayrollList.add(new EmployeePayrollData(id, name, salary));
     }
 
-    private void writeEmployeePayrollData() {
+    public void writeEmployeePayrollData(IOService fileIo) {
         System.out.println("Writing employee payroll to console\n"+employeePayrollList);
     }
 }
