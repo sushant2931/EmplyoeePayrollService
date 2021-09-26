@@ -2,6 +2,7 @@ package com.bridegelabz.payrollservice;
 
 
 import com.bridgelabz.payrollservice.FileUtils;
+import com.bridgelabz.payrollservice.Java8WatchServiceExample;
 import org.junit.Assert;
 import org.junit.Test;
 import java.io.IOException;
@@ -26,8 +27,7 @@ public class NIOFileAPITest {
 
         try {
             Files.createDirectories(playPath);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         Assert.assertTrue(Files.exists(playPath));
@@ -37,10 +37,9 @@ public class NIOFileAPITest {
             Assert.assertTrue(Files.notExists(tempFile));
             try {
                 Files.createFile(tempFile);
-                }
-            catch(IOException e) {
+            }catch(IOException e) {
                 Assert.assertTrue(Files.exists(tempFile));
-              }
+            }
         });
 
         Files.list(playPath).filter(Files:: isRegularFile).forEach(System.out :: println);
@@ -48,5 +47,12 @@ public class NIOFileAPITest {
         Files.newDirectoryStream(playPath, path->path.toFile().isFile() &&
                         path.toString().startsWith("temp"))
                 .forEach(System.out:: println);
+    }
+
+    @Test
+    public void givenAsDirectoryWhenWatchedListsAllTheActivities() throws IOException {
+        Path dir = Paths.get(HOME+"/"+PLAY_WITH_NIO);
+        Files.list(dir).filter(Files::isRegularFile).forEach(System.out::println);
+        new Java8WatchServiceExample(dir).processEvents();
     }
 }
